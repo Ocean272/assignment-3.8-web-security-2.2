@@ -1,6 +1,8 @@
 const express  = require('express');
 const cors = require('cors');
 const app = express();
+const authRoutes = require("./app/routes/auth.routes");
+const userRoutes = require("./app/routes/user.routes");
 
 let corsOptions = {
     origin: "http://localhost:3031"
@@ -10,6 +12,8 @@ let corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded( {extended: true} ));
+app.use(authRoutes);
+app.use(userRoutes);
 
 const db = require('./app/models');
 const Role = db.role;
