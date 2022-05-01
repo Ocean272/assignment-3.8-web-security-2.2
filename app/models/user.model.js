@@ -16,6 +16,19 @@ module.exports = function (sequelize) {
                 allowNull: false,
                 field: "email_add",
             },
+            password:{
+                type: DataTypes.STRING,
+                allowNull: false,
+                field: "password",
+            },
+            createdAt: {
+                type: DataTypes.STRING,
+                field: "created_at",
+            },
+            updatedAt: {
+                type: DataTypes.STRING,
+                field: "updated_at",
+            },
         },
         {
             sequelize,

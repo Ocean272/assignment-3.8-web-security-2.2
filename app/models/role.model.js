@@ -14,6 +14,14 @@ module.exports = function (sequelize) {
                 type: DataTypes.STRING,
                 field: "name",
             },
+            createdAt: {
+                type: DataTypes.STRING,
+                field: "created_at",
+            },
+            updatedAt: {
+                type: DataTypes.STRING,
+                field: "updated_at",
+            },
         },
         {
             sequelize,
