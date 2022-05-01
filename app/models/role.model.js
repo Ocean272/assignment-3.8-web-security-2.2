@@ -1,24 +1,26 @@
+const { DataTypes, Model } = require('sequelize');
 
-module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define( "roles",
+
+module.exports = function (sequelize) {
+    class Role extends Model{}
+
+    Role.init( 
         {
             id: {
-                type: Sequelize.INTEGER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
             },
             name: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 field: "name",
             },
-            createdAt: {
-                type: Sequelize.DATE,
-                field: "created_at",
-            },
-            updatedAt: {
-                type: Sequelize.DATE,
-                field: "updated_at",
-            },
-        });
+        },
+        {
+            sequelize,
+            modelName: "Role",
+            tableName: "roles",
+        }
+    );
 
     return Role;
 };

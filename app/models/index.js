@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
 
 const db = {};
 db.Sequelize = Sequelize;
-db.sequelize = sequelizel;
+db.sequelize = sequelize;
 db.user = require("./user.model")(sequelize, Sequelize);
 db.role = require("./role.model")(sequelize, Sequelize);
 db.role.belongsToMany(db.user, {

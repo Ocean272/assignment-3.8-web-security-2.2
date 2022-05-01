@@ -1,26 +1,29 @@
+const { DataTypes, Model } = require('sequelize');
 
-module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define( "users",
+
+module.exports = function (sequelize) {
+    class User extends Model{}
+
+    User.init(
         {
             username: {
-                type: Sequelize.STRNG,
+                type: DataTypes.STRING,
                 allowNull: false,
                 field: "user_name",
             },
             email: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 field: "email_add",
             },
-            createdAt: {
-                type: Sequelize.DATE,
-                field: "created_at",
-            },
-            updatedAt: {
-                type: Sequelize.DATE,
-                field: "updated_at",
-            },
-        });
+        },
+        {
+            sequelize,
+            modelName: "User",
+            tableName: "users",
+        }
+    
+    );
 
     return User;
 };
