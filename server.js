@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.post('/users', (req, res) => {
+    User.create(req.body).then(() => {
     const plainText = User.password;
         bcrypt.hash(plainText, saltRounds, function(err, hash){
     
@@ -41,11 +42,13 @@ app.post('/users', (req, res) => {
                 console.log(result);
 
             });
-
+  
         });
-    
-    User.create(req.body).then(() => {
+                      
+   
         res.send("user is inserted!");
+
+
     });
 });
 
