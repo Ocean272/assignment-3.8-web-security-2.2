@@ -1,47 +1,55 @@
 const express  = require('express');
-const cors = require('cors');
+const sequelize = require('./database');
+const PORT = 3000;
+const User = require('./user');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const bodyParser = require('body-parser');
+
+sequelize.sync({ force: true } ).then(() => console.log("db is ready"));
+
 const app = express();
-const authRoutes = require("./app/routes/auth.routes");
-const userRoutes = require("./app/routes/user.routes");
 
-let corsOptions = {
-    origin: "http://localhost:3031"
-};
-
-
-app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded( {extended: true} ));
-app.use(authRoutes);
-app.use(userRoutes);
-
-const db = require('./app/models');
-const Role = db.role;
-db.sequelize.sync();
-
-function initial() {
-    Role.create({
-        id: 1,
-        name: "user"
-    });
-
-    Role.create({
-        id: 2,
-        name: "moderator"
-    });
-
-    Role.create({
-        id: 3,
-        name: "admin"
-    });
-}
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to Supper Makan Apa"});
 
 });
 
-const PORT = process.env.PORT || 3001;
+app.post('/users', (req, res) => {
+    const plainText = User.password;
+        bcrypt.hash(plainText, saltRounds, function(err, hash){
+    
+            // A callback function called after hash() completes.    
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log(hash);
+        
+            const hashedValue = hash;
+            newUser.hash = hashedValue;
+            bcrypt.compare(plainText, hashedValue, function(err, result){
+                console.log(`compare ${plainText} against ${hashedValue}`);
+                if(err){
+                    console.error(err);
+                    return;
+                }
+                
+                console.log(result);
+
+            });
+
+        });
+    
+    User.create(req.body).then(() => {
+        res.send("user is inserted!");
+    });
+});
+
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${3001}.`);
+    console.log(`Server is running on port ${PORT}.`);
 });
